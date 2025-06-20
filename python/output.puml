@@ -1,0 +1,575 @@
+@startuml
+class DecisionTableGeneratorTest {
+    --
+}
+class TaxCalculatorTest {
+    --
+    + void testTaxCalBelow25K()
+    + void testTaxCal25KTo50K()
+    + void testTaxCal50kTo100K()
+    + void testTaxCalAbove100K()
+}
+class TaxCalculator {
+    --
+}
+class DecisionTableGenerator {
+    --
+}
+class BillingApplication {
+    --
+}
+class TaxCalDTO {
+    - String income
+    - String investment_80c
+    - String ruleId
+    --
+}
+class RuleDTO {
+    - String name
+    - String description
+    - String artifact_id
+    - List<Option> options
+    - Header headers
+    - List<Rows> rows
+    --
+}
+class PatternMatcher {
+    --
+    + void getMatcher()
+}
+class SecurityConfig {
+    --
+    + void getPasswordEncoder()
+}
+class Constants {
+    --
+}
+class ComparatorUtils {
+    --
+}
+class AbstractComparatorFactory {
+    --
+}
+class ComparatorFactory {
+    --
+    + void getComparator()
+}
+class Comparator {
+    --
+}
+class NotEqualsComparator {
+    --
+    + void satisfies()
+}
+class BetweenComparator {
+    --
+    + void satisfies()
+}
+class LikeComparator {
+    --
+    + void satisfies()
+}
+class NotLikeComparator {
+    --
+    + void satisfies()
+}
+class EqualsComparator {
+    --
+    + void satisfies()
+}
+class LessThanComparator {
+    --
+    + void satisfies()
+}
+class GreaterThanComparator {
+    --
+    + void satisfies()
+}
+class InComparator {
+    --
+    + void satisfies()
+}
+class NotInComparator {
+    --
+    + void satisfies()
+}
+class GreaterThanEqualsComparator {
+    --
+    + void satisfies()
+}
+class LessThanEqualsComparator {
+    --
+    + void satisfies()
+}
+class TaxController {
+    - ITaxCalService iTaxCalService
+    --
+    + void calculateTax()
+}
+class RuleController {
+    - IRuleService ruleService
+    --
+    + void createRule()
+    + void getRules()
+    + void updateRule()
+    + void deleteRule()
+}
+class AbstractDecisionTableExecutorFactory {
+    --
+}
+class for {
+    --
+}
+class AbstractDecisionTableExecutor {
+    --
+}
+class DecisionTableExecutorFactory {
+    --
+    + void getDecisionTableExecutor()
+}
+class DecisionTableExecutor {
+    --
+    + void getDecisionTable()
+    + void getFirstMatch()
+    + void getAllMatches()
+    - void findMatches()
+    - void createResult()
+    - void solveTheScript()
+    - void compareValueWithRules()
+    - void createDT()
+    - void getConditionValue()
+}
+class Rows {
+    - List<Condition> conditions
+    - List<Action> actions
+    - List<Script> scripts
+    --
+}
+class Option {
+    - String propname
+    - String propvalue
+    --
+}
+class Condition {
+    - String condition
+    - String value
+    --
+}
+class Action {
+    - String action
+    - String value
+    - String scripted
+    --
+}
+class Script {
+    - String name
+    - String script
+    --
+}
+class Header {
+    - List<Condition> conditions
+    - List<Script> scripts
+    - List<Action> actions
+    --
+}
+class Rule {
+    - String id
+    - String name
+    - String description
+    - String artifact_id
+    - List<Option> options
+    - Header headers
+    - List<Rows> rows
+    --
+}
+class TaxCalService {
+    - IRuleService ruleService
+    --
+    + void calculateTaxToBePaid()
+}
+class RuleService {
+    - RuleRepository ruleRepository
+    --
+    + void getAllRules()
+    + void saveRule()
+    + void updateRule()
+}
+class DecisionTableCreater {
+    - String dTJson
+    --
+    + void createDecisionTable()
+    - void createGenericCondition()
+    - void getCondition()
+}
+class DecisionTableResult {
+    - DecisionTableRow row
+    --
+    + void getRow()
+    + void setRow()
+    + void setActionResults()
+    + void setVariables()
+    + void getActionValue()
+}
+class DecisionTableCondition {
+    --
+}
+class GenericCondition {
+    - StringConstants comparatorName
+    - String conditionName
+    - StringConstants dataType
+    - ConditionValue conditionValue
+    --
+    + void getConditionValue()
+    + void getDataType()
+    + void setDataType()
+    + void setConditionValue()
+    + void getComparatorName()
+    + void getConditionName()
+    + void setComparatorName()
+    + void setConditionName()
+}
+class InCondition {
+    - StringConstants comparatorName
+    - List<GenericCondition> inCondition
+    - String conditionName
+    - StringConstants dataType
+    --
+    + void setConditionValue()
+    + void getDataType()
+    + void setInCondition()
+    + void getInCondition()
+    + void setComparatorName()
+    + void getComparatorName()
+    + void getConditionName()
+}
+class BetweenCondition {
+    - StringConstants comparatorName
+    - GenericCondition lessThanCondition
+    - GenericCondition greaterThanCondition
+    - String conditionName
+    - StringConstants dataType
+    --
+    + void setConditionValue()
+    + void getDataType()
+    + void setDataType()
+    + void getLessThanConditionValue()
+    + void getGreaterThanConditionValue()
+    + void setLessThanCondition()
+    + void setGreaterThanCondition()
+    + void setComparatorName()
+    + void getComparatorName()
+    + void getConditionName()
+}
+class DecisionTableRow {
+    --
+    + void setScripts()
+    + void setConditionValues()
+    + void setActions()
+}
+class DecisionTable {
+    - String name
+    - String description
+    - String artifact_id
+    --
+    + void setIgnoreCase()
+    + void getIgnoreCase()
+    + void setOptions()
+    + void setDT()
+    + void setHeaderConditions()
+    + void getHeader()
+    + void getDt()
+    + void setName()
+    + void setDescription()
+    + void setArtifactId()
+}
+class DecisionTableAction {
+    - String action
+    - String type
+    --
+    + void getType()
+    + void setType()
+    + void isScripted()
+    + void setScripted()
+    + void getAction()
+    + void setAction()
+    + void toString()
+}
+class DecisionTableScript {
+    - String script
+    - String type
+    --
+    + void getType()
+    + void setType()
+    + void getScript()
+    + void setScript()
+    + void solve()
+}
+class DecisionTableHeader {
+    --
+    + void addConditions()
+}
+class ConditionValue {
+    - String stringConditionValue
+    - long longConditionValue
+    - double doubleConditionValue
+    - boolean booleanConditionValue
+    --
+    + void getStringConditionValue()
+    + void setStringConditionValue()
+    + void getLongConditionValue()
+    + void setLongConditionValue()
+    + void getDoubleConditionValue()
+    + void setDoubleConditionValue()
+    + void getBooleanConditionValue()
+    + void setBooleanConditionValue()
+}
+class DataNotFoundException {
+    --
+}
+AbstractComparatorFactory --> BetweenComparator : uses
+AbstractComparatorFactory --> GreaterThanEqualsComparator : uses
+AbstractComparatorFactory --> NotLikeComparator : uses
+AbstractComparatorFactory --> NotInComparator : uses
+AbstractComparatorFactory --> EqualsComparator : uses
+AbstractComparatorFactory --> InComparator : uses
+AbstractComparatorFactory --> LikeComparator : uses
+AbstractComparatorFactory --> LessThanComparator : uses
+AbstractComparatorFactory --> ComparatorFactory : uses
+AbstractComparatorFactory --> NotEqualsComparator : uses
+AbstractComparatorFactory --> GreaterThanComparator : uses
+AbstractComparatorFactory --> LessThanEqualsComparator : uses
+ComparatorFactory --|> AbstractComparatorFactory
+NotEqualsComparator --|> Comparator
+BetweenComparator --|> Comparator
+LikeComparator --|> Comparator
+NotLikeComparator --|> Comparator
+EqualsComparator --|> Comparator
+LessThanComparator --|> Comparator
+GreaterThanComparator --|> Comparator
+InComparator --|> Comparator
+NotInComparator --|> Comparator
+GreaterThanEqualsComparator --|> Comparator
+LessThanEqualsComparator --|> Comparator
+RuleController --> Rule : uses
+DecisionTableExecutorFactory --|> AbstractDecisionTableExecutorFactory
+DecisionTableExecutorFactory --> DecisionTableExecutor : uses
+DecisionTableExecutor --|> AbstractDecisionTableExecutor
+DecisionTableExecutor --> DecisionTableCreater : uses
+DecisionTableExecutor --> DecisionTableResult : uses
+DecisionTableExecutor --> ConditionValue : uses
+RuleService --> DataNotFoundException : uses
+DecisionTableCreater --> DecisionTableAction : uses
+DecisionTableCreater --> ConditionValue : uses
+DecisionTableCreater --> DecisionTableRow : uses
+DecisionTableCreater --> GenericCondition : uses
+DecisionTableCreater --> BetweenCondition : uses
+DecisionTableCreater --> PatternMatcher : uses
+DecisionTableCreater --> InCondition : uses
+DecisionTableCreater --> DecisionTableScript : uses
+DecisionTableCreater --> DecisionTable : uses
+GenericCondition --|> DecisionTableCondition
+InCondition --|> GenericCondition
+BetweenCondition --|> GenericCondition
+DecisionTable --> DecisionTableHeader : uses
+object DecisionTableGeneratorTest_JSON {
+
+}
+object TaxCalculatorTest_JSON {
+
+}
+object TaxCalculator_JSON {
+
+}
+object DecisionTableGenerator_JSON {
+
+}
+object BillingApplication_JSON {
+
+}
+object TaxCalDTO_JSON {
+  "income": "sample",
+  "investment_80c": "sample",
+  "ruleId": "sample"
+}
+object RuleDTO_JSON {
+  "name": "sample",
+  "description": "sample",
+  "artifact_id": "sample",
+  "options": 0,
+  "headers": 0,
+  "rows": 0
+}
+object PatternMatcher_JSON {
+
+}
+object SecurityConfig_JSON {
+
+}
+object Constants_JSON {
+
+}
+object ComparatorUtils_JSON {
+
+}
+object AbstractComparatorFactory_JSON {
+
+}
+object ComparatorFactory_JSON {
+
+}
+object Comparator_JSON {
+
+}
+object NotEqualsComparator_JSON {
+
+}
+object BetweenComparator_JSON {
+
+}
+object LikeComparator_JSON {
+
+}
+object NotLikeComparator_JSON {
+
+}
+object EqualsComparator_JSON {
+
+}
+object LessThanComparator_JSON {
+
+}
+object GreaterThanComparator_JSON {
+
+}
+object InComparator_JSON {
+
+}
+object NotInComparator_JSON {
+
+}
+object GreaterThanEqualsComparator_JSON {
+
+}
+object LessThanEqualsComparator_JSON {
+
+}
+object TaxController_JSON {
+  "iTaxCalService": 0
+}
+object RuleController_JSON {
+  "ruleService": 0
+}
+object AbstractDecisionTableExecutorFactory_JSON {
+
+}
+object for_JSON {
+
+}
+object AbstractDecisionTableExecutor_JSON {
+
+}
+object DecisionTableExecutorFactory_JSON {
+
+}
+object DecisionTableExecutor_JSON {
+
+}
+object Rows_JSON {
+  "conditions": 0,
+  "actions": 0,
+  "scripts": 0
+}
+object Option_JSON {
+  "propname": "sample",
+  "propvalue": "sample"
+}
+object Condition_JSON {
+  "condition": "sample",
+  "value": "sample"
+}
+object Action_JSON {
+  "action": "sample",
+  "value": "sample",
+  "scripted": "sample"
+}
+object Script_JSON {
+  "name": "sample",
+  "script": "sample"
+}
+object Header_JSON {
+  "conditions": 0,
+  "scripts": 0,
+  "actions": 0
+}
+object Rule_JSON {
+  "id": "sample",
+  "name": "sample",
+  "description": "sample",
+  "artifact_id": "sample",
+  "options": 0,
+  "headers": 0,
+  "rows": 0
+}
+object TaxCalService_JSON {
+  "ruleService": 0
+}
+object RuleService_JSON {
+  "ruleRepository": 0
+}
+object DecisionTableCreater_JSON {
+  "dTJson": "sample"
+}
+object DecisionTableResult_JSON {
+  "row": 0
+}
+object DecisionTableCondition_JSON {
+
+}
+object GenericCondition_JSON {
+  "comparatorName": "sample",
+  "conditionName": "sample",
+  "dataType": "sample",
+  "conditionValue": 0
+}
+object InCondition_JSON {
+  "comparatorName": "sample",
+  "inCondition": 0,
+  "conditionName": "sample",
+  "dataType": "sample"
+}
+object BetweenCondition_JSON {
+  "comparatorName": "sample",
+  "lessThanCondition": 0,
+  "greaterThanCondition": 0,
+  "conditionName": "sample",
+  "dataType": "sample"
+}
+object DecisionTableRow_JSON {
+
+}
+object DecisionTable_JSON {
+  "name": "sample",
+  "description": "sample",
+  "artifact_id": "sample"
+}
+object DecisionTableAction_JSON {
+  "action": "sample",
+  "type": "sample"
+}
+object DecisionTableScript_JSON {
+  "script": "sample",
+  "type": "sample"
+}
+object DecisionTableHeader_JSON {
+
+}
+object ConditionValue_JSON {
+  "stringConditionValue": "sample",
+  "longConditionValue": 0,
+  "doubleConditionValue": 0,
+  "booleanConditionValue": 0
+}
+object DataNotFoundException_JSON {
+
+}
+@enduml

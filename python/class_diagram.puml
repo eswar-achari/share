@@ -1,0 +1,1170 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontName Arial
+hide empty members
+class com.zemoso.zinteract.DecisionTableGeneratorTest {
+  -- Methods --
+  void testGetActionRuleSet()
+}
+class com.zemoso.zinteract.TaxCalculatorTest {
+  -- Methods --
+  void testTaxCalBelow25K()
+  void testTaxCal25KTo50K()
+  void testTaxCal50kTo100K()
+  void testTaxCalAbove100K()
+}
+class com.zemoso.zinteract.TaxCalculator {
+  -- Methods --
+  String getRulesJson()
+  double execute(Map valueMap, String rules)
+}
+class com.zemoso.zinteract.DecisionTableGenerator {
+  -- Methods --
+  DecisionTableResult execute(Map valueMap, String rules)
+}
+class com.zemoso.zinteract.BillingApplication {
+  -- Methods --
+  void main(String args)
+}
+class com.zemoso.zinteract.dto.TaxCalDTO {
+  -- Fields --
+  income: str
+  investment_80c: str
+  ruleId: str
+}
+class com.zemoso.zinteract.dto.RuleDTO {
+  -- Fields --
+  name: str
+  description: str
+  artifact_id: str
+  options: list
+  headers: NoneType
+  rows: list
+}
+class com.zemoso.zinteract.util.PatternMatcher {
+  -- Fields --
+  matchers: dict
+  -- Methods --
+  Matcher getMatcher(type keyword)
+}
+class com.zemoso.zinteract.config.SecurityConfig {
+  -- Methods --
+  void configure(AuthenticationManagerBuilder auth)
+  PasswordEncoder getPasswordEncoder()
+  void configure(HttpSecurity http)
+  CorsConfigurationSource corsConfigurationSource()
+}
+class com.zemoso.zinteract.constants.Constants {
+  -- Fields --
+  DEFAULT_DT_EXECUTOR_FACTORY_CLASS_NAME: str
+  CONFIG_FILE_NAME: str
+  INCOME_TAX_JSON: str
+}
+class com.zemoso.zinteract.comparators.util.ComparatorUtils {
+  -- Methods --
+  Boolean isEqual(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+  Boolean isLike(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+  Boolean isNotLike(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+  Boolean isGreaterThan(DecisionTableCondition condition, ConditionValue conditionValue)
+  Boolean isLessThan(DecisionTableCondition condition, ConditionValue conditionValue)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory {
+  -- Fields --
+  COMPARATOR_FACTORY_CLASS_NAME: str
+  DEFAULT_COMPARATOR_FACTORY_CLASSNAME: str
+  comparators: dict
+  cFactory: NoneType
+  -- Methods --
+  Comparator getComparator(StringConstants keyword)
+  AbstractComparatorFactory getComparatorFactory()
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory {
+  -- Methods --
+  Comparator getComparator(StringConstants keyword)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue rhs, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator {
+  -- Methods --
+  Boolean satisfies(DecisionTableCondition condition, ConditionValue conditionValue, boolean ignoreCase)
+}
+class com.zemoso.zinteract.controller.TaxController {
+  -- Fields --
+  iTaxCalService: NoneType
+  -- Methods --
+  ResponseEntity calculateTax(TaxCalDTO taxCalculatorDTO)
+}
+class com.zemoso.zinteract.controller.RuleController {
+  -- Fields --
+  ruleService: NoneType
+  -- Methods --
+  ResponseEntity createRule(RuleDTO rule)
+  ResponseEntity getRule(String ruleId)
+  ResponseEntity getRules()
+  ResponseEntity updateRule(Rule rule)
+  ResponseEntity deleteRule(String ruleId)
+}
+class com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory {
+  -- Fields --
+  executorFactory: NoneType
+  mapOfIdAndExecutor: dict
+  -- Methods --
+  AbstractDecisionTableExecutorFactory getExecutorFactory()
+  AbstractDecisionTableExecutor getDecisionTableExecutor(String decisionTableId, String rules)
+}
+class com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor {
+  -- Methods --
+  DecisionTableResult getFirstMatch(Map value)
+  List getAllMatches(Map value)
+  List getAllActionResults(Map value)
+}
+class com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory {
+  -- Methods --
+  AbstractDecisionTableExecutor getDecisionTableExecutor(String decisionTableId, String rules)
+}
+class com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor {
+  -- Fields --
+  rules: str
+  decisionTable: NoneType
+  -- Methods --
+  DecisionTable getDecisionTable()
+  List getAllActionResults(Map value)
+  DecisionTableResult getFirstMatch(Map value)
+  List getAllMatches(Map value)
+  List findMatches(Map valueMap, Boolean firstOnly)
+  DecisionTableResult createResult(Map valueMap, DecisionTableRow decisionTableRow)
+  boolean solveTheScript(DecisionTableRow decisionTableRow, Map valueMap)
+  boolean compareValueWithRules(DecisionTableRow decisionTableRow, Map valueMap)
+  DecisionTable createDT()
+  ConditionValue getConditionValue(String value, Enum dataType)
+}
+class com.zemoso.zinteract.model.Rows {
+  -- Fields --
+  conditions: list
+  actions: list
+  scripts: list
+}
+class com.zemoso.zinteract.model.Option {
+  -- Fields --
+  propname: str
+  propvalue: str
+}
+class com.zemoso.zinteract.model.Condition {
+  -- Fields --
+  condition: str
+  value: str
+}
+class com.zemoso.zinteract.model.Action {
+  -- Fields --
+  action: str
+  value: str
+  scripted: str
+}
+class com.zemoso.zinteract.model.Script {
+  -- Fields --
+  name: str
+  script: str
+}
+class com.zemoso.zinteract.model.Header {
+  -- Fields --
+  conditions: list
+  scripts: list
+  actions: list
+}
+class com.zemoso.zinteract.model.Rule {
+  -- Fields --
+  id: str
+  name: str
+  description: str
+  artifact_id: str
+  options: list
+  headers: NoneType
+  rows: list
+}
+class com.zemoso.zinteract.service.TaxCalService {
+  -- Fields --
+  ruleService: NoneType
+  -- Methods --
+  Double calculateTaxToBePaid(TaxCalDTO taxCalDTO)
+}
+class com.zemoso.zinteract.service.RuleService {
+  -- Fields --
+  ruleRepository: NoneType
+  -- Methods --
+  Rule getRule(String ruleId)
+  List getAllRules()
+  Rule saveRule(Rule rule)
+  Rule updateRule(Rule rule)
+  void deleteRule(String ruleId)
+}
+class com.zemoso.zinteract.decisiontable.DecisionTableCreater {
+  -- Fields --
+  KEY_DT_NAME: str
+  KEY_DT_DESCRIPTION: str
+  KEY_DT_ARTIFACT_ID: str
+  KEY_DT_HEADER: str
+  KEY_DT_OPTIONS: str
+  KEY_OPTION_IGNORECASE: str
+  dTJson: str
+  -- Methods --
+  DecisionTable createDecisionTable()
+  GenericCondition createGenericCondition(String condName, String cValue, StringConstants dataType, StringConstants comparatorName)
+  DecisionTableCondition getCondition(String conValue, String dataType, String condName)
+}
+class com.zemoso.zinteract.decisiontable.DecisionTableResult {
+  -- Fields --
+  variables: dict
+  row: NoneType
+  actionResults: dict
+  -- Methods --
+  DecisionTableRow getRow()
+  void setRow(DecisionTableRow row)
+  Map getActionResults()
+  void setActionResults()
+  void setVariables(Map variables)
+  String getActionValue(DecisionTableAction action)
+}
+class com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition {
+  -- Methods --
+  StringConstants getComparatorName()
+  String getConditionName()
+  ConditionValue getConditionValue()
+  StringConstants getDataType()
+}
+class com.zemoso.zinteract.decisiontable.condition.GenericCondition {
+  -- Fields --
+  comparatorName: str
+  conditionName: str
+  dataType: str
+  conditionValue: NoneType
+  -- Methods --
+  ConditionValue getConditionValue()
+  StringConstants getDataType()
+  void setDataType(StringConstants dataType)
+  void setConditionValue(ConditionValue conditionValue)
+  StringConstants getComparatorName()
+  String getConditionName()
+  void setComparatorName(StringConstants s)
+  void setConditionName(String s)
+}
+class com.zemoso.zinteract.decisiontable.condition.impl.InCondition {
+  -- Fields --
+  comparatorName: str
+  inCondition: list
+  conditionName: str
+  dataType: str
+  -- Methods --
+  void setConditionValue(List l)
+  StringConstants getDataType()
+  void setInCondition(List g)
+  List getInCondition()
+  void setComparatorName(StringConstants comparatorName)
+  StringConstants getComparatorName()
+  String getConditionName()
+}
+class com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition {
+  -- Fields --
+  comparatorName: str
+  lessThanCondition: NoneType
+  greaterThanCondition: NoneType
+  conditionName: str
+  dataType: str
+  -- Methods --
+  void setConditionValue(GenericCondition lessThanCondition, GenericCondition greaterThanCondition)
+  StringConstants getDataType()
+  void setDataType(StringConstants dataType)
+  GenericCondition getLessThanConditionValue()
+  GenericCondition getGreaterThanConditionValue()
+  void setLessThanCondition(GenericCondition condition)
+  void setGreaterThanCondition(GenericCondition condition)
+  void setComparatorName(StringConstants comparatorName)
+  StringConstants getComparatorName()
+  String getConditionName()
+}
+class com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow {
+  -- Fields --
+  conditionValues: dict
+  actions: dict
+  scripts: dict
+  -- Methods --
+  Map getScripts()
+  void setScripts(String a, DecisionTableScript script)
+  Map getConditionValues()
+  void setConditionValues(String condition, DecisionTableCondition decisionTableCondition)
+  Map getActions()
+  void setActions(String a, DecisionTableAction s)
+}
+class com.zemoso.zinteract.decisiontable.condition.model.DecisionTable {
+  -- Fields --
+  options: str
+  name: str
+  description: str
+  artifact_id: str
+  ignoreCase: bool
+  header: NoneType
+  dT: list
+  -- Methods --
+  void setIgnoreCase(Boolean ignoreCase)
+  Boolean getIgnoreCase()
+  void setOptions(String options)
+  void setDT(List dt)
+  void setHeaderConditions(String s, Enum e)
+  DecisionTableHeader getHeader()
+  List getDt()
+  void setName(String s)
+  void setDescription(String s)
+  void setArtifactId(String s)
+}
+class com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction {
+  -- Fields --
+  action: str
+  type: str
+  isScripted: bool
+  -- Methods --
+  String getType()
+  void setType(String type)
+  boolean isScripted()
+  void setScripted(boolean scripted)
+  String getAction()
+  void setAction(String s)
+  String toString()
+}
+class com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript {
+  -- Fields --
+  script: str
+  type: str
+  -- Methods --
+  String getType()
+  void setType(String type)
+  String getScript()
+  void setScript(String script)
+  Boolean solve(Map variables)
+}
+class com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader {
+  -- Fields --
+  conditions: dict
+  -- Methods --
+  Map getConditions()
+  void addConditions(String s, Enum e)
+}
+class com.zemoso.zinteract.decisiontable.condition.model.ConditionValue {
+  -- Fields --
+  stringConditionValue: str
+  longConditionValue: NoneType
+  doubleConditionValue: NoneType
+  booleanConditionValue: bool
+  -- Methods --
+  String getStringConditionValue()
+  void setStringConditionValue(String stringConditionValue)
+  long getLongConditionValue()
+  void setLongConditionValue(long longConditionValue)
+  double getDoubleConditionValue()
+  void setDoubleConditionValue(double doubleConditionValue)
+  boolean getBooleanConditionValue()
+  void setBooleanConditionValue(boolean booleanConditionValue)
+}
+class com.zemoso.zinteract.exception.DataNotFoundException {
+  -- Fields --
+  log: NoneType
+}
+object com.zemoso.zinteract.DecisionTableGeneratorTest_obj << (J,orange) >>
+json com.zemoso.zinteract.DecisionTableGeneratorTest_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.DecisionTableGeneratorTest\"
+}
+}
+com.zemoso.zinteract.DecisionTableGeneratorTest ..> com.zemoso.zinteract.DecisionTableGeneratorTest_obj : has instance
+com.zemoso.zinteract.DecisionTableGeneratorTest_obj ..> com.zemoso.zinteract.DecisionTableGeneratorTest_json : serializes to
+object com.zemoso.zinteract.TaxCalculatorTest_obj << (J,orange) >>
+json com.zemoso.zinteract.TaxCalculatorTest_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.TaxCalculatorTest\"
+}
+}
+com.zemoso.zinteract.TaxCalculatorTest ..> com.zemoso.zinteract.TaxCalculatorTest_obj : has instance
+com.zemoso.zinteract.TaxCalculatorTest_obj ..> com.zemoso.zinteract.TaxCalculatorTest_json : serializes to
+object com.zemoso.zinteract.TaxCalculator_obj << (J,orange) >>
+json com.zemoso.zinteract.TaxCalculator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.TaxCalculator\"
+}
+}
+com.zemoso.zinteract.TaxCalculator ..> com.zemoso.zinteract.TaxCalculator_obj : has instance
+com.zemoso.zinteract.TaxCalculator_obj ..> com.zemoso.zinteract.TaxCalculator_json : serializes to
+object com.zemoso.zinteract.DecisionTableGenerator_obj << (J,orange) >>
+json com.zemoso.zinteract.DecisionTableGenerator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.DecisionTableGenerator\"
+}
+}
+com.zemoso.zinteract.DecisionTableGenerator ..> com.zemoso.zinteract.DecisionTableGenerator_obj : has instance
+com.zemoso.zinteract.DecisionTableGenerator_obj ..> com.zemoso.zinteract.DecisionTableGenerator_json : serializes to
+object com.zemoso.zinteract.BillingApplication_obj << (J,orange) >>
+json com.zemoso.zinteract.BillingApplication_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.BillingApplication\"
+}
+}
+com.zemoso.zinteract.BillingApplication ..> com.zemoso.zinteract.BillingApplication_obj : has instance
+com.zemoso.zinteract.BillingApplication_obj ..> com.zemoso.zinteract.BillingApplication_json : serializes to
+object com.zemoso.zinteract.dto.TaxCalDTO_obj << (J,orange) >>
+json com.zemoso.zinteract.dto.TaxCalDTO_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.dto.TaxCalDTO\",
+  \"income\": \"sample_string\",
+  \"investment_80c\": \"sample_string\",
+  \"ruleId\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.dto.TaxCalDTO ..> com.zemoso.zinteract.dto.TaxCalDTO_obj : has instance
+com.zemoso.zinteract.dto.TaxCalDTO_obj ..> com.zemoso.zinteract.dto.TaxCalDTO_json : serializes to
+object com.zemoso.zinteract.dto.RuleDTO_obj << (J,orange) >>
+json com.zemoso.zinteract.dto.RuleDTO_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.dto.RuleDTO\",
+  \"name\": \"sample_string\",
+  \"description\": \"sample_string\",
+  \"artifact_id\": \"sample_string\",
+  \"options\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"headers\": null,
+  \"rows\": [
+    \"item1\",
+    \"item2\"
+  ]
+}
+}
+com.zemoso.zinteract.dto.RuleDTO ..> com.zemoso.zinteract.dto.RuleDTO_obj : has instance
+com.zemoso.zinteract.dto.RuleDTO_obj ..> com.zemoso.zinteract.dto.RuleDTO_json : serializes to
+object com.zemoso.zinteract.util.PatternMatcher_obj << (J,orange) >>
+json com.zemoso.zinteract.util.PatternMatcher_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.util.PatternMatcher\",
+  \"matchers\": {
+    \"key\": \"value\"
+  }
+}
+}
+com.zemoso.zinteract.util.PatternMatcher ..> com.zemoso.zinteract.util.PatternMatcher_obj : has instance
+com.zemoso.zinteract.util.PatternMatcher_obj ..> com.zemoso.zinteract.util.PatternMatcher_json : serializes to
+object com.zemoso.zinteract.config.SecurityConfig_obj << (J,orange) >>
+json com.zemoso.zinteract.config.SecurityConfig_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.config.SecurityConfig\"
+}
+}
+com.zemoso.zinteract.config.SecurityConfig ..> com.zemoso.zinteract.config.SecurityConfig_obj : has instance
+com.zemoso.zinteract.config.SecurityConfig_obj ..> com.zemoso.zinteract.config.SecurityConfig_json : serializes to
+object com.zemoso.zinteract.constants.Constants_obj << (J,orange) >>
+json com.zemoso.zinteract.constants.Constants_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.constants.Constants\",
+  \"DEFAULT_DT_EXECUTOR_FACTORY_CLASS_NAME\": \"sample_string\",
+  \"CONFIG_FILE_NAME\": \"sample_string\",
+  \"INCOME_TAX_JSON\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.constants.Constants ..> com.zemoso.zinteract.constants.Constants_obj : has instance
+com.zemoso.zinteract.constants.Constants_obj ..> com.zemoso.zinteract.constants.Constants_json : serializes to
+object com.zemoso.zinteract.comparators.util.ComparatorUtils_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.util.ComparatorUtils_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.util.ComparatorUtils\"
+}
+}
+com.zemoso.zinteract.comparators.util.ComparatorUtils ..> com.zemoso.zinteract.comparators.util.ComparatorUtils_obj : has instance
+com.zemoso.zinteract.comparators.util.ComparatorUtils_obj ..> com.zemoso.zinteract.comparators.util.ComparatorUtils_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory\",
+  \"COMPARATOR_FACTORY_CLASS_NAME\": \"sample_string\",
+  \"DEFAULT_COMPARATOR_FACTORY_CLASSNAME\": \"sample_string\",
+  \"comparators\": {
+    \"key\": \"value\"
+  },
+  \"cFactory\": null
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory ..> com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory_obj ..> com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory ..> com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.Comparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator_json : serializes to
+object com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator_obj << (J,orange) >>
+json com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator\"
+}
+}
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator_obj : has instance
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator_obj ..> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator_json : serializes to
+object com.zemoso.zinteract.controller.TaxController_obj << (J,orange) >>
+json com.zemoso.zinteract.controller.TaxController_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.controller.TaxController\",
+  \"iTaxCalService\": null
+}
+}
+com.zemoso.zinteract.controller.TaxController ..> com.zemoso.zinteract.controller.TaxController_obj : has instance
+com.zemoso.zinteract.controller.TaxController_obj ..> com.zemoso.zinteract.controller.TaxController_json : serializes to
+object com.zemoso.zinteract.controller.RuleController_obj << (J,orange) >>
+json com.zemoso.zinteract.controller.RuleController_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.controller.RuleController\",
+  \"ruleService\": null
+}
+}
+com.zemoso.zinteract.controller.RuleController ..> com.zemoso.zinteract.controller.RuleController_obj : has instance
+com.zemoso.zinteract.controller.RuleController_obj ..> com.zemoso.zinteract.controller.RuleController_json : serializes to
+object com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory\",
+  \"executorFactory\": null,
+  \"mapOfIdAndExecutor\": {
+    \"key\": \"value\"
+  }
+}
+}
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory_obj : has instance
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory_obj ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory_json : serializes to
+object com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor\"
+}
+}
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor_obj : has instance
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor_obj ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.AbstractDecisionTableExecutor_json : serializes to
+object com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory\"
+}
+}
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory_obj : has instance
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory_obj ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory_json : serializes to
+object com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor\",
+  \"rules\": \"sample_string\",
+  \"decisionTable\": null
+}
+}
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor_obj : has instance
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor_obj ..> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor_json : serializes to
+object com.zemoso.zinteract.model.Rows_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Rows_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Rows\",
+  \"conditions\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"actions\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"scripts\": [
+    \"item1\",
+    \"item2\"
+  ]
+}
+}
+com.zemoso.zinteract.model.Rows ..> com.zemoso.zinteract.model.Rows_obj : has instance
+com.zemoso.zinteract.model.Rows_obj ..> com.zemoso.zinteract.model.Rows_json : serializes to
+object com.zemoso.zinteract.model.Option_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Option_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Option\",
+  \"propname\": \"sample_string\",
+  \"propvalue\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.model.Option ..> com.zemoso.zinteract.model.Option_obj : has instance
+com.zemoso.zinteract.model.Option_obj ..> com.zemoso.zinteract.model.Option_json : serializes to
+object com.zemoso.zinteract.model.Condition_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Condition_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Condition\",
+  \"condition\": \"sample_string\",
+  \"value\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.model.Condition ..> com.zemoso.zinteract.model.Condition_obj : has instance
+com.zemoso.zinteract.model.Condition_obj ..> com.zemoso.zinteract.model.Condition_json : serializes to
+object com.zemoso.zinteract.model.Action_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Action_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Action\",
+  \"action\": \"sample_string\",
+  \"value\": \"sample_string\",
+  \"scripted\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.model.Action ..> com.zemoso.zinteract.model.Action_obj : has instance
+com.zemoso.zinteract.model.Action_obj ..> com.zemoso.zinteract.model.Action_json : serializes to
+object com.zemoso.zinteract.model.Script_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Script_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Script\",
+  \"name\": \"sample_string\",
+  \"script\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.model.Script ..> com.zemoso.zinteract.model.Script_obj : has instance
+com.zemoso.zinteract.model.Script_obj ..> com.zemoso.zinteract.model.Script_json : serializes to
+object com.zemoso.zinteract.model.Header_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Header_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Header\",
+  \"conditions\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"scripts\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"actions\": [
+    \"item1\",
+    \"item2\"
+  ]
+}
+}
+com.zemoso.zinteract.model.Header ..> com.zemoso.zinteract.model.Header_obj : has instance
+com.zemoso.zinteract.model.Header_obj ..> com.zemoso.zinteract.model.Header_json : serializes to
+object com.zemoso.zinteract.model.Rule_obj << (J,orange) >>
+json com.zemoso.zinteract.model.Rule_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.model.Rule\",
+  \"id\": \"sample_string\",
+  \"name\": \"sample_string\",
+  \"description\": \"sample_string\",
+  \"artifact_id\": \"sample_string\",
+  \"options\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"headers\": null,
+  \"rows\": [
+    \"item1\",
+    \"item2\"
+  ]
+}
+}
+com.zemoso.zinteract.model.Rule ..> com.zemoso.zinteract.model.Rule_obj : has instance
+com.zemoso.zinteract.model.Rule_obj ..> com.zemoso.zinteract.model.Rule_json : serializes to
+object com.zemoso.zinteract.service.TaxCalService_obj << (J,orange) >>
+json com.zemoso.zinteract.service.TaxCalService_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.service.TaxCalService\",
+  \"ruleService\": null
+}
+}
+com.zemoso.zinteract.service.TaxCalService ..> com.zemoso.zinteract.service.TaxCalService_obj : has instance
+com.zemoso.zinteract.service.TaxCalService_obj ..> com.zemoso.zinteract.service.TaxCalService_json : serializes to
+object com.zemoso.zinteract.service.RuleService_obj << (J,orange) >>
+json com.zemoso.zinteract.service.RuleService_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.service.RuleService\",
+  \"ruleRepository\": null
+}
+}
+com.zemoso.zinteract.service.RuleService ..> com.zemoso.zinteract.service.RuleService_obj : has instance
+com.zemoso.zinteract.service.RuleService_obj ..> com.zemoso.zinteract.service.RuleService_json : serializes to
+object com.zemoso.zinteract.decisiontable.DecisionTableCreater_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.DecisionTableCreater_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.DecisionTableCreater\",
+  \"KEY_DT_NAME\": \"sample_string\",
+  \"KEY_DT_DESCRIPTION\": \"sample_string\",
+  \"KEY_DT_ARTIFACT_ID\": \"sample_string\",
+  \"KEY_DT_HEADER\": \"sample_string\",
+  \"KEY_DT_OPTIONS\": \"sample_string\",
+  \"KEY_OPTION_IGNORECASE\": \"sample_string\",
+  \"dTJson\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.decisiontable.DecisionTableCreater ..> com.zemoso.zinteract.decisiontable.DecisionTableCreater_obj : has instance
+com.zemoso.zinteract.decisiontable.DecisionTableCreater_obj ..> com.zemoso.zinteract.decisiontable.DecisionTableCreater_json : serializes to
+object com.zemoso.zinteract.decisiontable.DecisionTableResult_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.DecisionTableResult_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.DecisionTableResult\",
+  \"variables\": {
+    \"key\": \"value\"
+  },
+  \"row\": null,
+  \"actionResults\": {
+    \"key\": \"value\"
+  }
+}
+}
+com.zemoso.zinteract.decisiontable.DecisionTableResult ..> com.zemoso.zinteract.decisiontable.DecisionTableResult_obj : has instance
+com.zemoso.zinteract.decisiontable.DecisionTableResult_obj ..> com.zemoso.zinteract.decisiontable.DecisionTableResult_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition\"
+}
+}
+com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition ..> com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition_obj ..> com.zemoso.zinteract.decisiontable.condition.DecisionTableCondition_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.GenericCondition_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.GenericCondition_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.GenericCondition\",
+  \"comparatorName\": \"sample_string\",
+  \"conditionName\": \"sample_string\",
+  \"dataType\": \"sample_string\",
+  \"conditionValue\": null
+}
+}
+com.zemoso.zinteract.decisiontable.condition.GenericCondition ..> com.zemoso.zinteract.decisiontable.condition.GenericCondition_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.GenericCondition_obj ..> com.zemoso.zinteract.decisiontable.condition.GenericCondition_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.impl.InCondition_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.impl.InCondition_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.impl.InCondition\",
+  \"comparatorName\": \"sample_string\",
+  \"inCondition\": [
+    \"item1\",
+    \"item2\"
+  ],
+  \"conditionName\": \"sample_string\",
+  \"dataType\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.decisiontable.condition.impl.InCondition ..> com.zemoso.zinteract.decisiontable.condition.impl.InCondition_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.impl.InCondition_obj ..> com.zemoso.zinteract.decisiontable.condition.impl.InCondition_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition\",
+  \"comparatorName\": \"sample_string\",
+  \"lessThanCondition\": null,
+  \"greaterThanCondition\": null,
+  \"conditionName\": \"sample_string\",
+  \"dataType\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition ..> com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition_obj ..> com.zemoso.zinteract.decisiontable.condition.impl.BetweenCondition_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow\",
+  \"conditionValues\": {
+    \"key\": \"value\"
+  },
+  \"actions\": {
+    \"key\": \"value\"
+  },
+  \"scripts\": {
+    \"key\": \"value\"
+  }
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow_obj ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableRow_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.DecisionTable_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.DecisionTable_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.DecisionTable\",
+  \"options\": \"sample_string\",
+  \"name\": \"sample_string\",
+  \"description\": \"sample_string\",
+  \"artifact_id\": \"sample_string\",
+  \"ignoreCase\": true,
+  \"header\": null,
+  \"dT\": [
+    \"item1\",
+    \"item2\"
+  ]
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTable ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTable_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTable_obj ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTable_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction\",
+  \"action\": \"sample_string\",
+  \"type\": \"sample_string\",
+  \"isScripted\": true
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction_obj ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableAction_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript\",
+  \"script\": \"sample_string\",
+  \"type\": \"sample_string\"
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript_obj ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader\",
+  \"conditions\": {
+    \"key\": \"value\"
+  }
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader_obj ..> com.zemoso.zinteract.decisiontable.condition.model.DecisionTableHeader_json : serializes to
+object com.zemoso.zinteract.decisiontable.condition.model.ConditionValue_obj << (J,orange) >>
+json com.zemoso.zinteract.decisiontable.condition.model.ConditionValue_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.decisiontable.condition.model.ConditionValue\",
+  \"stringConditionValue\": \"sample_string\",
+  \"longConditionValue\": null,
+  \"doubleConditionValue\": null,
+  \"booleanConditionValue\": true
+}
+}
+com.zemoso.zinteract.decisiontable.condition.model.ConditionValue ..> com.zemoso.zinteract.decisiontable.condition.model.ConditionValue_obj : has instance
+com.zemoso.zinteract.decisiontable.condition.model.ConditionValue_obj ..> com.zemoso.zinteract.decisiontable.condition.model.ConditionValue_json : serializes to
+object com.zemoso.zinteract.exception.DataNotFoundException_obj << (J,orange) >>
+json com.zemoso.zinteract.exception.DataNotFoundException_json {
+  {
+  \"_type\": \"com.zemoso.zinteract.exception.DataNotFoundException\",
+  \"log\": null
+}
+}
+com.zemoso.zinteract.exception.DataNotFoundException ..> com.zemoso.zinteract.exception.DataNotFoundException_obj : has instance
+com.zemoso.zinteract.exception.DataNotFoundException_obj ..> com.zemoso.zinteract.exception.DataNotFoundException_json : serializes to
+com.zemoso.zinteract.DecisionTableGeneratorTest --> com.zemoso.zinteract.value : put
+com.zemoso.zinteract.DecisionTableGeneratorTest --> com.zemoso.zinteract.Assertions : assertNotNull
+com.zemoso.zinteract.DecisionTableGeneratorTest --> com.zemoso.zinteract.DecisionTableGenerator : execute
+com.zemoso.zinteract.TaxCalculatorTest --> com.zemoso.zinteract.value : put
+com.zemoso.zinteract.TaxCalculatorTest --> com.zemoso.zinteract.TaxCalculator : execute
+com.zemoso.zinteract.TaxCalculatorTest --> com.zemoso.zinteract.TaxCalculator : getRulesJson
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.AbstractDecisionTableExecutorFactory : getExecutorFactory
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.result : containsKey
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.log : info
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.abstractDecisionTableExecutorFactory : getDecisionTableExecutor
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.result : get
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.Double : parseDouble
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.prop : getProperty
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.prop : load
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.log : error
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.dtExecutor : getAllActionResults
+com.zemoso.zinteract.TaxCalculator --> com.zemoso.zinteract.ex : getMessage
+com.zemoso.zinteract.DecisionTableGenerator --> com.zemoso.zinteract.Factory : getDecisionTableExecutor
+com.zemoso.zinteract.DecisionTableGenerator --> com.zemoso.zinteract.AbstractDecisionTableExecutorFactory : getExecutorFactory
+com.zemoso.zinteract.DecisionTableGenerator --> com.zemoso.zinteract.log : info
+com.zemoso.zinteract.DecisionTableGenerator --> com.zemoso.zinteract.decisionTableExecutor : getFirstMatch
+com.zemoso.zinteract.DecisionTableGenerator --> com.zemoso.zinteract.result : getActionResults
+com.zemoso.zinteract.BillingApplication --> com.zemoso.zinteract.SpringApplication : run
+com.zemoso.zinteract.util.PatternMatcher --> com.zemoso.zinteract.util.matchers : get
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.NoOpPasswordEncoder : getInstance
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.configuration : setAllowedHeaders
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.configuration : setAllowCredentials
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.source : registerCorsConfiguration
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.auth : inMemoryAuthentication
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.http : cors
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.configuration : setAllowedOrigins
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.configuration : setAllowedMethods
+com.zemoso.zinteract.config.SecurityConfig --> com.zemoso.zinteract.config.Arrays : asList
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.Pattern : compile
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.Pattern : quote
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.eCondition : getConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.conditionValue : getDoubleConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.conditionValue : getLongConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.conditionValue : getBooleanConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.condition : getConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.greaterThanCondition : getConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.conditionValue : getStringConditionValue
+com.zemoso.zinteract.comparators.util.ComparatorUtils --> com.zemoso.zinteract.comparators.util.condition : getDataType
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory --> com.zemoso.zinteract.comparators.abstractfactory.c : newInstance
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory --> com.zemoso.zinteract.comparators.abstractfactory.System : getProperty
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory --> com.zemoso.zinteract.comparators.abstractfactory.Class : forName
+com.zemoso.zinteract.comparators.abstractfactory.AbstractComparatorFactory --> com.zemoso.zinteract.comparators.abstractfactory.e : printStackTrace
+com.zemoso.zinteract.comparators.abstractfactory.factory.ComparatorFactory --> com.zemoso.zinteract.comparators.abstractfactory.factory.comparators : get
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotEqualsComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isEqual
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.betweenCondition : getLessThanConditionValue
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isLessThan
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isGreaterThan
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.BetweenComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.betweenCondition : getGreaterThanConditionValue
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LikeComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isLike
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotLikeComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isNotLike
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.EqualsComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isEqual
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isLessThan
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isGreaterThan
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.con : getInCondition
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.InComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isEqual
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.inCondition : getInCondition
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.NotInComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isEqual
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.GreaterThanEqualsComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isLessThan
+com.zemoso.zinteract.comparators.abstractfactory.factory.impl.LessThanEqualsComparator --> com.zemoso.zinteract.comparators.abstractfactory.factory.impl.ComparatorUtils : isGreaterThan
+com.zemoso.zinteract.controller.TaxController --> com.zemoso.zinteract.controller.ResponseEntity : ok
+com.zemoso.zinteract.controller.TaxController --> com.zemoso.zinteract.controller.iTaxCalService : calculateTaxToBePaid
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ResponseEntity : ok
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ruleService : updateRule
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ruleService : getRule
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.BeanUtils : copyProperties
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ruleService : getAllRules
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ruleService : saveRule
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ruleService : deleteRule
+com.zemoso.zinteract.controller.RuleController --> com.zemoso.zinteract.controller.ResponseEntity : badRequest
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.c : newInstance
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.Class : forName
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.AbstractDecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.log : error
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.log : info
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.mapOfIdAndExecutor : put
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.DecisionTableExecutorFactory --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.mapOfIdAndExecutor : get
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.result : setRow
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.decisionTableRow : getScripts
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.Collectors : toList
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.allMatches : get
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.headersWithDatatype : entrySet
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.script : solve
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.decisionTableCreater : createDecisionTable
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.Long : parseLong
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.AbstractComparatorFactory : getComparatorFactory
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.result : setVariables
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.comparator : satisfies
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.headerWithDatatypeEntry : getKey
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.allMatches : size
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.valueMap : get
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.decisionTableCondition : getComparatorName
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.headersWithDatatype : get
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.abstractComparatorFactory : getComparator
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.dataType : equals
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.results : add
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.decisionTableRow : getConditionValues
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.Double : parseDouble
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.Boolean : parseBoolean
+com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.DecisionTableExecutor --> com.zemoso.zinteract.decisiontableexecutor.abstractfactory.factory.impl.decisionTableScriptsEntry : getValue
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.TaxCalculator : execute
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.TaxCalculator : getRulesJson
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.taxCalDTO : getIncome
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.taxCalDTO : getRuleId
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.taxCalDTO : getInvestment_80c
+com.zemoso.zinteract.service.TaxCalService --> System.out : println
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.values : put
+com.zemoso.zinteract.service.TaxCalService --> com.zemoso.zinteract.service.ruleService : getRule
+com.zemoso.zinteract.service.RuleService --> com.zemoso.zinteract.service.ruleRepository : findAll
+com.zemoso.zinteract.service.RuleService --> com.zemoso.zinteract.service.ruleRepository : findById
+com.zemoso.zinteract.service.RuleService --> com.zemoso.zinteract.service.ruleRepository : save
+com.zemoso.zinteract.service.RuleService --> com.zemoso.zinteract.service.ruleRepository : delete
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.acs : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.bCondition : setGreaterThanCondition
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.patternMatcher : getMatcher
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.scripts : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.options : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.acs : size
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.m : group
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.list : add
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.Long : valueOf
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.conds : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : getHeader
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.rows : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.options : size
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.scripts : size
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.bCondition : setDataType
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.conds : size
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.decisionTableRows : add
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.genericCondition : setDataType
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.inCondition : setConditionValue
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.bCondition : setConditionName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setIgnoreCase
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setDescription
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.action : getAsJsonObject
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setArtifactId
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.option : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.rows : size
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.bCondition : setComparatorName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.genericCondition : setConditionName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.genericCondition : setComparatorName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setHeaderConditions
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.row : setScripts
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.Boolean : valueOf
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.m : find
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.condition : getDataType
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.jObject : get
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.decisionTableAction : setType
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.row : setActions
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.bCondition : setLessThanCondition
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.jObject : getAsJsonArray
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.jObject : getAsJsonObject
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.decisionTableAction : setAction
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.m : reset
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.inCondition : setDataType
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.Double : valueOf
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.row : setConditionValues
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.inCondition : setComparatorName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.inCondition : setConditionName
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.headers : getAsJsonArray
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.dT : setDT
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.decisionTableAction : setScripted
+com.zemoso.zinteract.decisiontable.DecisionTableCreater --> com.zemoso.zinteract.decisiontable.genericCondition : setConditionValue
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.pair : getValue
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.it : next
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.actionsMap : entrySet
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.pair : getKey
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.action : isScripted
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.variables : put
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.action : getAction
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.variables : get
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.variables : keySet
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.actionString : replaceAll
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.actionString : contains
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.actionResult : put
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.Eval : me
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.action : getType
+com.zemoso.zinteract.decisiontable.DecisionTableResult --> com.zemoso.zinteract.decisiontable.it : hasNext
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.script : contains
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.variables : keySet
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.variables : get
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.Boolean : parseBoolean
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.Eval : me
+com.zemoso.zinteract.decisiontable.condition.model.DecisionTableScript --> com.zemoso.zinteract.decisiontable.condition.model.script : replaceAll
+@enduml
